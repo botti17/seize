@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.02 Reb Edition
+// @version 0.03 Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2017.12.24 Ver0.02 Reb Edition";
+var VerNo="2018.01.13 Ver0.03 Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -70,7 +70,7 @@ q$("#whiteWrapper").append("<span>("+"サーバー時間 "+$x("//span[@id='serve
 addOpenSettingLink();
 
 console.log('*** bro3_AUTO_SEIZU end ***');
-}
+
 })();
 
 
@@ -170,6 +170,40 @@ function openSettingBox() {
 		Setting_Box.innerHTML+='<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>';
 		Setting_Box.innerHTML+='</tr>';
 		Setting_Box.innerHTML+='</table>';
+
+		Setting_Box.innerHTML+='		<table border=“1” style="font-size: 9px">';
+		Setting_Box.innerHTML+='		<tr>';
+		Setting_Box.innerHTML+='		<td colspan="3"></td>';
+		Setting_Box.innerHTML+='		<td>ステータス</td>';
+		Setting_Box.innerHTML+='		</tr>';
+		Setting_Box.innerHTML+='		<tr>';
+		Setting_Box.innerHTML+='		<td><input type="checkbox">防御解除時間</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
+		Setting_Box.innerHTML+='		</tr>';
+		Setting_Box.innerHTML+='		<tr>';
+		Setting_Box.innerHTML+='		<td><input type="checkbox">鹵獲設定時間</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
+		Setting_Box.innerHTML+='		</tr>';
+		Setting_Box.innerHTML+='		<tr>';
+		Setting_Box.innerHTML+='		<td><input type="checkbox">鹵獲解除時間</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
+		Setting_Box.innerHTML+='		</tr>';
+		Setting_Box.innerHTML+='		<tr>';
+		Setting_Box.innerHTML+='		<td><input type="checkbox">防御設定時間</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
+		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
+		Setting_Box.innerHTML+='		</tr>';
+		Setting_Box.innerHTML+='		</table>';
+
+
+
 
    ADContainer.appendChild(Setting_Box);
 
