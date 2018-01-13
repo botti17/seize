@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.078 Reb Edition
+// @version 0.079 Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.078 Reb Edition";
+var VerNo="2018.01.13 Ver0.079 Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -201,9 +201,11 @@ function openSettingBox() {
 `);
 */
 
-	 Setting_Box2.innerHTML+= '資源取得方法';
+	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
 //	 Setting_Box2.insertAdjacentHTML('afterend', '資源取得方法');
-
+var a;
+a.append('資源取得方法2<BR>');
+Setting_Box2.innerHTML+= a;
 
 	 ADContainer.appendChild(Setting_Box2);
 // ==========[ ボタンエリア ]==========
