@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.07e Reb Edition
+// @version 0.07f Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.07e Reb Edition";
+var VerNo="2018.01.13 Ver0.07f Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -101,8 +101,8 @@ function openSettingBox() {
   var COLOR_BACK	= "#FFF2BB";	// 各BOX背景色
   var FONTSTYLE = "bold 10px 'ＭＳ ゴシック'";	// ダイアログの基本フォントスタイル
 	// 表示位置をロード
-  popupLeft = 150;
-  popupTop = 150;
+  popupLeft = 50;
+  popupTop = 250;
 // ==========[ 表示コンテナ作成 ]==========
     var ADContainer = document.createElement("div");
     ADContainer.id = "ADContainerAC";
@@ -186,12 +186,10 @@ function openSettingBox() {
 
 */
 
-	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
+//	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
 //	 Setting_Box2.insertAdjacentHTML('afterend', '資源取得方法');
 
 var troop_html = (`
-	<div id="landRokakuDataBox">
-		鹵獲ツール<br />
 		<table border=“1” style="font-size: 9px">
 		<tr>
 		<td>
@@ -533,25 +531,6 @@ var troop_html = (`
 		</td>
 		</tr>
 		</table>
-	</div>
-	<style>
-	<!--
-		#landRokakuDataBox{
-			width:200px;
-			padding:5px;
-			background-color:#FFFFFF;
-			border:1px solid #000000;
-			color:#333333;
-		}
-		#landRokakuDataBox a{
-			color:#0000DD;
-			cursor:pointer;
-		}
-		#landRokakuDataBox span{
-			color:#DD0000;
-		}
-	-->
-	</style>
 `);
 
 
