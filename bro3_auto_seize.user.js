@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.07d Reb Edition
+// @version 0.07e Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.07d Reb Edition";
+var VerNo="2018.01.13 Ver0.07e Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -117,7 +117,7 @@ function openSettingBox() {
     ADContainer.style.padding = "2px";
     ADContainer.style.MozBorderRadius = "4px";
     ADContainer.style.zIndex = 9999;
-    ADContainer.style.width = "450px";
+    ADContainer.style.width = "900px";
 	document.body.appendChild(ADContainer);
   $e(ADContainer, "mousedown", function(event){
     if( event.target != $("ADContainerAC")) {return false;}
