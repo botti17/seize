@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.01 final edition
+// @version 0.02 Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2017.12.24 Ver0.01 Rev Edition";
+var VerNo="2017.12.24 Ver0.02 Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -47,98 +47,256 @@ var HOST = location.hostname; //アクセスURLホスト
 //ssidを取得
 var cok = d.cookie;
 var ssid = cok.match(/(SSID=)[0-9a-zA-Z]+/)[0].replace(/(SSID=)/,'');
-var WDPLC = "-999,-999";	//出兵先アドレス
 
 //------------------//
 // オプション設定管理用 //
 //------------------//
-var g_capture_options = {};
-var g_skills_options  = [];
-var g_event_process   = false;
-var g_hp;//鹵獲武将たちの最小HP格納エリア
-var g_gg;//鹵獲武将たちの最小ゲージ格納エリア
-var g_hp_min;//鹵獲武将たちの最小限回復する必要があるHP数の格納エリア
-var g_deck_cost;
-var g_rokaku_cards = [];//出兵用武将カード
-var g_h_all1="";//全軍セット状態
-var g_rokaku_cnt;//デッキで待機している鹵獲武将の数
-var g_zengun_cnt;//デッキで待機している全軍武将の数
-var g_rokaku_su;//設定されている鹵獲武将の数
-var g_zengun_su;//設定されている全軍武将の数
-var g_run_cnt;//出兵中の武将数
-var g_set_cnt;//デッキ中の内政武将数
-var g_set_flg;//内政中有無フラグ
-var g_hp_max=100;//最大限回復して良いHP数
 
 //------------------//
 // 保存設定部品定義    //
 //------------------//
 //
 var H_AUT_CAP     = 'aut0';   // 自動鹵獲スイッチ
-var H_TROOPSS     = 'trs0';		// 出兵元
-var H_TROOPSE0    = 'tre0';		// 出兵先チェックボックス（木）
-var H_TROOPSE1    = 'tre1';		// 出兵先チェックボックス（石）
-var H_TROOPSE2    = 'tre2';		// 出兵先チェックボックス（鉄）
-var H_TROOPSE3    = 'tre3';		// 出兵先チェックボックス（糧）
-var H_TROOPSELV0  = 'trl0';		// 出兵先テキスト（木）
-var H_TROOPSELV1  = 'trl1';		// 出兵先テキスト（石）
-var H_TROOPSELV2  = 'trl2';		// 出兵先テキスト（鉄）
-var H_TROOPSELV3  = 'trl3';		// 出兵先テキスト（糧）
-var H_MaxTROOP0   = 'mtr0';		// 獲得限度上限（木）
-var H_MaxTROOP1   = 'mtr1';		// 獲得限度上限（石）
-var H_MaxTROOP2   = 'mtr2';		// 獲得限度上限（鉄）
-var H_MaxTROOP3   = 'mtr3';		// 獲得限度上限（糧）
-
-var H_Cap1        = 'cap1';		// 武将番号
-var H_Cap2        = 'cap2';		// 武将番号
-var H_Cap3        = 'cap3';		// 武将番号
-var H_Cap4        = 'cap4';		// 武将番号
-var H_Cap5        = 'cap5';		// 武将番号
-var H_Cap6        = 'cap6';		// 武将番号
-var H_MinCap1     = 'mcp1';		// 鹵獲高
-var H_MinCap2     = 'mcp2';		// 鹵獲高
-var H_MinCap3     = 'mcp3';		// 鹵獲高
-var H_MinCap4     = 'mcp4';		// 鹵獲高
-var H_MinCap5     = 'mcp5';		// 鹵獲高
-var H_MinCap6     = 'mcp6';		// 鹵獲高
-
-var H_All1        = 'all1';		// 全軍
-var H_All2        = 'all2';		// 全軍
-
-var H_POTIONS0    = 'pts0';		// 回復用ラベルNO
-var H_POTIONO1    = 'pto1';		// 回復HP下限
-var H_POTIONO2    = 'pto2';		// 回復HP上限
-
-var H_POTATO1     = 'pta1';		// 自動HP回復
-var H_POTATO2     = 'pta2';		// 自動討伐回復
-
-var H_OPT_Skill01 = 'sl01';		// スキル
-var H_OPT_Skill02 = 'sl02';		// スキル
-var H_OPT_Skill03 = 'sl03';		// スキル
-var H_OPT_Skill04 = 'sl04';		// スキル
-var H_OPT_Skill05 = 'sl05';		// スキル
-var H_OPT_Skill06 = 'sl06';		// スキル
-var H_OPT_Skill07 = 'sl07';		// スキル
-var H_OPT_Skill08 = 'sl08';		// スキル
-var H_OPT_Skill09 = 'sl09';		// スキル
-
-var H_OPT_Skill21 = 'sl21';		// スキル
-var H_OPT_Skill31 = 'sl31';		// スキル
-
-var wdnl;
-var stnl;
-var irnl;
-var rcnl;
 
 initGMFunctions();	//GM関数の初期化
 
 ( function() {
 
-console.log('*** bro3_AUTO_CAPTURE start ***'+location.pathname);
-q$("#whiteWrapper").append("<span style='font-weight:bold'>("+"BRO3_AUTO_CAPTURE 判定開始("+VerNo+"))</span><BR>");
+console.log('*** bro3_AUTO_SEIZU start ***'+location.pathname);
+q$("#whiteWrapper").append("<span style='font-weight:bold'>("+"bro3_AUTO_SEIZU 判定開始("+VerNo+"))</span><BR>");
 q$("#whiteWrapper").append("<span>("+"サーバー時間 "+$x("//span[@id='server_time']",d).innerHTML+""+")</span><BR>");
 
+//メニュー追加用
+addOpenSettingLink();
 
-	console.log('*** bro3_AUTO_CAPTURE end ***');
+console.log('*** bro3_AUTO_SEIZU end ***');
 }
 })();
+
+
+function addOpenSettingLink() {
+	var openLink = document.createElement("a");
+    openLink.id = "Auto_Seize";
+    openLink.href = "javascript:void(0);";
+    openLink.style.marginTop = "0px";
+    openLink.style.marginLeft = "0px";
+    openLink.innerHTML = "<BR> [自動鹵獲Reb]";
+    openLink.style.font = "10px 'ＭＳ ゴシック'";
+    openLink.style.color = "#FFFFFF";
+    openLink.style.cursor = "pointer";
+		openLink.addEventListener("click", function() {
+			openSettingBox();
+		}, true);
+    var sidebar_list = xpath('//*[@class="sideBox"]', d);
+    if (sidebar_list.snapshotLength) {
+       sidebar_list.snapshotItem(0).appendChild(openLink);
+    }
+}
+function openSettingBox() {
+//  closeSettingBox(); //[自動鹵獲]がクリックされて画面が開いてたら一旦閉じる
+	// 色設定
+  var COLOR_FRAME = "#333333";	// 枠背景色
+  var COLOR_BASE	= "#654634";	// 拠点リンク色
+  var COLOR_TITLE = "#FFCC00";	// 各BOXタイトル背景色
+  var COLOR_BACK	= "#FFF2BB";	// 各BOX背景色
+  var FONTSTYLE = "bold 10px 'ＭＳ ゴシック'";	// ダイアログの基本フォントスタイル
+	// 表示位置をロード
+  popupLeft = 150;
+  popupTop = 150;
+// ==========[ 表示コンテナ作成 ]==========
+    var ADContainer = document.createElement("div");
+    ADContainer.id = "ADContainerAC";
+    ADContainer.style.position = "absolute";
+    ADContainer.style.color = COLOR_BASE;
+    ADContainer.style.backgroundColor = COLOR_FRAME;
+    ADContainer.style.opacity= 1.0;
+    ADContainer.style.border = "solid 2px black";
+    ADContainer.style.left = popupLeft + "px";
+    ADContainer.style.top = popupTop + "px";
+    ADContainer.style.font = FONTSTYLE;
+    ADContainer.style.padding = "2px";
+    ADContainer.style.MozBorderRadius = "4px";
+    ADContainer.style.zIndex = 9999;
+    ADContainer.style.width = "450px";
+	document.body.appendChild(ADContainer);
+  $e(ADContainer, "mousedown", function(event){
+    if( event.target != $("ADContainerAC")) {return false;}
+    g_MD="ADContainerAC";
+    g_MX=event.pageX-parseInt(this.style.left,10);
+    g_MY=event.pageY-parseInt(this.style.top,10);
+    event.preventDefault();
+  });
+  $e(document, "mousemove", function(event){
+    if(g_MD != "ADContainerAC") return true;
+    var ADContainer = $("ADContainerAC");
+    if( !ADContainer ) return true;
+    var popupLeft = event.pageX - g_MX;
+    var popupTop  = event.pageY - g_MY;
+    ADContainer.style.left = popupLeft + "px";
+    ADContainer.style.top = popupTop + "px";
+//ポップアップ位置を永続保存
+    setVALUE("popup_left", popupLeft);
+    setVALUE("popup_top", popupTop);
+   });
+   $e(document, "mouseup", function(event){g_MD="";});
+// ==========[ タイトル＋バージョン ]==========
+	  var title = document.createElement("span");
+    title.style.color = "#FFFFFF";
+    title.style.font = 'bold 120% "ＭＳ ゴシック"';
+    title.style.margin = "2px";
+    title.innerHTML = "Auto Seize ";
+    ADContainer.appendChild(title);
+    var vno = document.createElement("span");
+    vno.style.color = COLOR_TITLE;
+    vno.style.margin = "2px";
+    vno.innerHTML = " Ver_" + VerNo;
+    ADContainer.appendChild(vno);
+// ==========[ 設定 ]==========
+    var Setting_Box = document.createElement("html");
+    Setting_Box.style.margin = "0px 4px 4px 0px";
+    Setting_Box.style.border ="solid 2px black";
+    Setting_Box.style.width = "100%";
+
+		Setting_Box.innerHTML+='<table border="1">';
+		Setting_Box.innerHTML+='<tr>';
+		Setting_Box.innerHTML+='<td class="vertical">資源取得方法</td>';
+		Setting_Box.innerHTML+='<td valign="top">';
+		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="0" checked="checked">資源均等取得<BR>';
+		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="1">得意資源優先取得<BR>';
+		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="2">糧取得→得意資源優先取得<BR>';
+		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="3">得意資源優先取得→糧取得</td>';
+		Setting_Box.innerHTML+='</tr>';
+		Setting_Box.innerHTML+='<tr>';
+		Setting_Box.innerHTML+='<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>';
+		Setting_Box.innerHTML+='</tr>';
+		Setting_Box.innerHTML+='</table>';
+
+   ADContainer.appendChild(Setting_Box);
+
+// ==========[ ボタンエリア ]==========
+
+
+// 閉じるボタン
+}
+
+
+
+
+
+
+/*****************************************************************************
+ * initGMFunctions
+ * @description GM関数初期化
+ */
+function initGMFunctions() {
+	// @copyright	  2009, 2010 James Campos
+	// @license		cc-by-3.0; http://creativecommons.org/licenses/by/3.0/
+	if (typeof GM_getValue == 'undefined') {
+
+		GM_addStyle = function(css) {
+			var style = document.createElement('style');
+			style.textContent = css;
+			document.getElementsByTagName('head')[0].appendChild(style);
+		};
+
+		GM_deleteValue = function(key) {
+			localStorage.removeItem(key);
+		};
+
+		GM_getValue = function(key, defaultValue) {
+			var value = localStorage.getItem(key);
+			if (!value) return defaultValue;
+			var type = value[0];
+			value = value.substring(1);
+			switch (type) {
+				case 'b': return value == 'true';
+				case 'n': return Number(value);
+				default : return value;
+			}
+		};
+
+		GM_log = function(message, level) {
+			if (typeof console == 'object') {
+				console.log(message, level);
+			}
+		};
+
+		GM_openInTab = function(url) {
+			return window.open(url, "_blank");
+		};
+
+		GM_registerMenuCommand = function(name, funk) {
+			throw new Error('not supported');
+		};
+
+		GM_setValue = function(name, value) {
+			switch (typeof value) {
+				case 'string':
+				case 'number':
+				case 'boolean':
+					break;
+				default:
+					throw new TypeError();
+			}
+			value = (typeof value)[0] + value;
+			localStorage.setItem(name, value);
+		};
+
+		//additional function by romer
+		GM_listValues = function() {
+			var len = localStorage.length;
+			var res = new Object();
+			var key = '';
+			for (var i = 0; i < len; i++) {
+				key = localStorage.key(i);
+				res[key] = key;
+			}
+			return res;
+		};
+
+		GM_xmlhttpRequest = function(requestParam) {
+			var xhr;
+			if (typeof XMLHttpRequest == 'function') {
+				xhr = XMLHttpRequest;
+			} else {
+				return;
+			}
+			var req = new xhr();
+		   ['onload', 'onerror', 'onreadystatechange'].forEach(function (event) {
+				if ((event in requestParam) == false) {
+					return;
+				}
+				req[event] = function () {
+					var isComplete = (req.readyState == 4);
+					var responseState = {
+							responseText: req.responseText,
+							readyState: req.readyState,
+							responseHeaders: isComplete ? req.getAllResponseHeaders() : '',
+							status: isComplete ? req.status : 0,
+							statusText: isComplete ? req.statusText : '',
+							finalUrl: isComplete ? requestParam.url : ''
+					};
+					requestParam[event](responseState);
+				};
+			});
+
+			try {
+				req.open(requestParam.method ? requestParam.method : 'GET', requestParam.url, true);
+			} catch(e) {
+				if (requestParam.onerror) {
+					requestParam.onerror({readyState:4, responseHeaders:'', responseText:'', status:403, statusText:'Forbidden', finalUrl:''});
+				}
+				return;
+			}
+
+			if ('headers' in requestParam && typeof requestParam.headers == 'object') {
+				for (var name in requestParam.headers) {
+					req.setRequestHeader(name, requestParam.headers[name]);
+				}
+			}
+
+			req.send(('data' in requestParam) ? requestParam.data : null);
+			return req;
+		};
+	}
+}
