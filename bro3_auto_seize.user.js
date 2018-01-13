@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.079 Reb Edition
+// @version 0.07a Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.079 Reb Edition";
+var VerNo="2018.01.13 Ver0.07a Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -203,9 +203,59 @@ function openSettingBox() {
 
 	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
 //	 Setting_Box2.insertAdjacentHTML('afterend', '資源取得方法');
-var a;
-a.append('資源取得方法2<BR>');
-Setting_Box2.innerHTML+= a;
+
+var troop_html = (function(){/*
+	<div id="landRokakuDataBox">
+		鹵獲ツール<br />
+		<table>
+			<tr data-type="tree">
+				<td>木：</td>
+				<td><span class="troop_land_xy">{{html rokakuTreeXY}}</span></td>
+				<td><a class="save">[登録]</a></td>
+				<td><a class="del">[解除]</a></td>
+			</tr>
+			<tr data-type="stone">
+				<td>石：</td>
+				<td><span class="troop_land_xy">{{html rokakuStoneXY}}</span></td>
+				<td><a class="save">[登録]</a></td>
+				<td><a class="del">[解除]</a></td>
+			</tr>
+			<tr data-type="iron">
+				<td>鉄：</td>
+				<td><span class="troop_land_xy">{{html rokakuIronXY}}</span></td>
+				<td><a class="save">[登録]</a></td>
+				<td><a class="del">[解除]</a></td>
+			</tr>
+			<tr data-type="rice">
+				<td>糧：</td>
+				<td><span class="troop_land_xy">{{html rokakuRiceXY}}</span></td>
+				<td><a class="save">[登録]</a></td>
+				<td><a class="del">[解除]</a></td>
+			</tr>
+		</table>
+	</div>
+	<style>
+	<!--
+		#landRokakuDataBox{
+			width:200px;
+			padding:5px;
+			background-color:#FFFFFF;
+			border:1px solid #000000;
+			color:#333333;
+		}
+		#landRokakuDataBox a{
+			color:#0000DD;
+			cursor:pointer;
+		}
+		#landRokakuDataBox span{
+			color:#DD0000;
+		}
+	-->
+	</style>
+*/});
+
+
+Setting_Box2.innerHTML+= troop_html;
 
 	 ADContainer.appendChild(Setting_Box2);
 // ==========[ ボタンエリア ]==========
