@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.04 Reb Edition
+// @version 0.05 Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.04 Reb Edition";
+var VerNo="2018.01.13 Ver0.05 Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -152,64 +152,10 @@ function openSettingBox() {
     vno.innerHTML = " Ver_" + VerNo;
     ADContainer.appendChild(vno);
 // ==========[ 設定 ]==========
-    var Setting_Box = document.createElement("html");
-    Setting_Box.style.margin = "0px 4px 4px 0px";
-    Setting_Box.style.border ="solid 2px black";
-    Setting_Box.style.width = "100%";
-
-		Setting_Box.innerHTML+='<table border="1">';
-		Setting_Box.innerHTML+='<tr>';
-		Setting_Box.innerHTML+='<td class="vertical">資源取得方法</td>';
-		Setting_Box.innerHTML+='<td valign="top">';
-		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="0" checked="checked">資源均等取得<BR>';
-		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="1">得意資源優先取得<BR>';
-		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="2">糧取得→得意資源優先取得<BR>';
-		Setting_Box.innerHTML+='<input type="radio" name="hyouka" value="3">得意資源優先取得→糧取得</td>';
-		Setting_Box.innerHTML+='</tr>';
-		Setting_Box.innerHTML+='<tr>';
-		Setting_Box.innerHTML+='<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>';
-		Setting_Box.innerHTML+='</tr>';
-		Setting_Box.innerHTML+='</table>';
-
-		Setting_Box.innerHTML+='		<table border=“1” style="font-size: 9px">';
-		Setting_Box.innerHTML+='		<tr>';
-		Setting_Box.innerHTML+='		<td colspan="3"></td>';
-		Setting_Box.innerHTML+='		<td>ステータス</td>';
-		Setting_Box.innerHTML+='		</tr>';
-		Setting_Box.innerHTML+='		<tr>';
-		Setting_Box.innerHTML+='		<td><input type="checkbox">防御解除時間</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
-		Setting_Box.innerHTML+='		</tr>';
-		Setting_Box.innerHTML+='		<tr>';
-		Setting_Box.innerHTML+='		<td><input type="checkbox">鹵獲設定時間</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
-		Setting_Box.innerHTML+='		</tr>';
-		Setting_Box.innerHTML+='		<tr>';
-		Setting_Box.innerHTML+='		<td><input type="checkbox">鹵獲解除時間</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
-		Setting_Box.innerHTML+='		</tr>';
-		Setting_Box.innerHTML+='		<tr>';
-		Setting_Box.innerHTML+='		<td><input type="checkbox">防御設定時間</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">時</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 20px;">分から</td>';
-		Setting_Box.innerHTML+='		<td><input type="text" style="text-align: center; width: 50px;"></td>';
-		Setting_Box.innerHTML+='		</tr>';
-		Setting_Box.innerHTML+='		</table>';
-
-
-
-
-   ADContainer.appendChild(Setting_Box);
 
 	 var Setting_Box2 = document.createElement("table");
 
-//	 Setting_Box2.innerHTML+='<table border="1">';
+	 Setting_Box2.innerHTML+='<table border="1">';
 	 Setting_Box2.innerHTML+='<tr>';
 	 Setting_Box2.innerHTML+='<td class="vertical">資源取得方法</td>';
 	 Setting_Box2.innerHTML+='<td valign="top">';
@@ -221,7 +167,21 @@ function openSettingBox() {
 	 Setting_Box2.innerHTML+='<tr>';
 	 Setting_Box2.innerHTML+='<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>';
 	 Setting_Box2.innerHTML+='</tr>';
-//	 Setting_Box2.innerHTML+='</table>';
+	 Setting_Box2.innerHTML+='</table>';
+
+	 Setting_Box2.innerHTML+='<table border="1">';
+	 Setting_Box2.innerHTML+='<tr>';
+	 Setting_Box2.innerHTML+='<td class="vertical">資源取得方法</td>';
+	 Setting_Box2.innerHTML+='<td valign="top">';
+	 Setting_Box2.innerHTML+='<input type="radio" name="hyouka" value="0" checked="checked">資源均等取得<BR>';
+	 Setting_Box2.innerHTML+='<input type="radio" name="hyouka" value="1">得意資源優先取得<BR>';
+	 Setting_Box2.innerHTML+='<input type="radio" name="hyouka" value="2">糧取得→得意資源優先取得<BR>';
+	 Setting_Box2.innerHTML+='<input type="radio" name="hyouka" value="3">得意資源優先取得→糧取得</td>';
+	 Setting_Box2.innerHTML+='</tr>';
+	 Setting_Box2.innerHTML+='<tr>';
+	 Setting_Box2.innerHTML+='<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>';
+	 Setting_Box2.innerHTML+='</tr>';
+	 Setting_Box2.innerHTML+='</table>';
 
 	 ADContainer.appendChild(Setting_Box2);
 // ==========[ ボタンエリア ]==========
