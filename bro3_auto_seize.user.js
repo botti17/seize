@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.07c Reb Edition
+// @version 0.07d Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.07c Reb Edition";
+var VerNo="2018.01.13 Ver0.07d Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -155,7 +155,7 @@ function openSettingBox() {
 
 	 var Setting_Box2 = document.createElement("table");
    Setting_Box2.style.backgroundColor = COLOR_BACK;
-
+/*
 	 Setting_Box2.innerHTML+='<table border="1">';
 	 Setting_Box2.innerHTML+='<tr>';
 	 Setting_Box2.innerHTML+='<td class="vertical">資源取得方法</td>';
@@ -184,21 +184,6 @@ function openSettingBox() {
 	 Setting_Box2.innerHTML+='</tr>';
 	 Setting_Box2.innerHTML+='</table>';
 
-/*	 Setting_Box2.insertAdjacentHTML('afterend', `
-<table border="1">
-<tr>
-<td class="vertical">資源取得方法</td>
-<td valign="top">
-<input type="radio" name="hyouka" value="0" checked="checked">資源均等取得<BR>
-<input type="radio" name="hyouka" value="1">得意資源優先取得<BR>
-<input type="radio" name="hyouka" value="2">糧取得→得意資源優先取得<BR>
-<input type="radio" name="hyouka" value="3">得意資源優先取得→糧取得</td>
-</tr>
-<tr>
-<td colspan="2" width="380">※意資源優先取得は、得意資源を優先して取得し目標収入量に達したら次の得意資源を優先して取得する</td>
-</tr>
-</table>
-`);
 */
 
 	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
