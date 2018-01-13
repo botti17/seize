@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.07b Reb Edition
+// @version 0.07c Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -32,7 +32,7 @@ function xpath(query,targetDoc) {
 
 //	console.log('*** bro3_AUTO_CAPTURE 2***');//
 
-var VerNo="2018.01.13 Ver0.07b Reb Edition";
+var VerNo="2018.01.13 Ver0.07c Reb Edition";
 var g_MD="";
 var d = document;
 var $ = function(id) { return d.getElementById(id); };
@@ -204,34 +204,349 @@ function openSettingBox() {
 	 Setting_Box2.innerHTML+= '資源取得方法<BR>';
 //	 Setting_Box2.insertAdjacentHTML('afterend', '資源取得方法');
 
-var troop_html = (/*
+var troop_html = (`
 	<div id="landRokakuDataBox">
 		鹵獲ツール<br />
-		<table>
-			<tr data-type="tree">
-				<td>木：</td>
-				<td><span class="troop_land_xy">{{html rokakuTreeXY}}</span></td>
-				<td><a class="save">[登録]</a></td>
-				<td><a class="del">[解除]</a></td>
-			</tr>
-			<tr data-type="stone">
-				<td>石：</td>
-				<td><span class="troop_land_xy">{{html rokakuStoneXY}}</span></td>
-				<td><a class="save">[登録]</a></td>
-				<td><a class="del">[解除]</a></td>
-			</tr>
-			<tr data-type="iron">
-				<td>鉄：</td>
-				<td><span class="troop_land_xy">{{html rokakuIronXY}}</span></td>
-				<td><a class="save">[登録]</a></td>
-				<td><a class="del">[解除]</a></td>
-			</tr>
-			<tr data-type="rice">
-				<td>糧：</td>
-				<td><span class="troop_land_xy">{{html rokakuRiceXY}}</span></td>
-				<td><a class="save">[登録]</a></td>
-				<td><a class="del">[解除]</a></td>
-			</tr>
+		<table border=“1” style="font-size: 9px">
+		<tr>
+		<td>
+
+		<table border=“1” style="font-size: 9px">
+		<tr>
+		<td rowspan="3" colspan="2" valign="middle">出兵元</td>
+		<td><input type="checkbox">本拠地</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="3"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">僻地１</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="3"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">僻地２</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="3"></td>
+		</tr>
+
+		<tr style="text-align: center;">
+		<td colspan="3"></td>
+		<td>木</td>
+		<td>石</td>
+		<td>鉄</td>
+		<td>糧</td>
+		</tr>
+
+		<tr>
+		<td colspan="3">資源最大保有可能量</td>
+		<td style="text-align: center;"><input type="text" style="text-align: center; width: 65px;"></td>
+		<td style="text-align: center;"><input type="text" style="text-align: center; width: 65px;"></td>
+		<td style="text-align: center;"><input type="text" style="text-align: center; width: 65px;"></td>
+		<td style="text-align: center;"><input type="text" style="text-align: center; width: 65px;"></td>
+		</tr>
+
+		<tr>
+		<td rowspan="2" colspan="2" valign="middle">出兵先</td>
+		<td><input type="checkbox">★１</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">★２</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+
+		<tr style="text-align: center;">
+		<td></td>
+		<td>武将番号</td>
+		<td>最小獲得<BR>鹵獲糧</td>
+		<td>木</td>
+		<td>石</td>
+		<td>鉄</td>
+		<td>糧</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ１</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ２</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ３</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ４</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ５</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ６</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ７</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">パッシブ８</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">攻奪１</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">攻奪２</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">攻奪３</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">攻奪４</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">攻奪５</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		<td>(<input type="text" style="text-align: center; width: 65px;">)</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">全軍１●</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="5">回復スキル使用に上げ下げする武将カード</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">全軍２</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="5"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">全軍３</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td colspan="5"></td>
+		</tr>
+
+		</table>
+
+		</td>
+		<td valign="top">
+		武将を回復する範囲<BR>
+		<table border=“1” style="font-size: 9px;">
+		<tr>
+		<td>回復目安</td>
+		<td>下限</td>
+		<td><input type="text" style="text-align: center; width: 20px;"></td>
+		<td>≦</td>
+		<td>上限</td>
+		<td><input type="text" style="text-align: center; width: 20px;"></td>
+		</tr>
+		</table>
+
+		鹵獲武将に使う回復スキル<BR>
+		<input type="checkbox">仁君<BR>
+		<input type="checkbox">弓腰姫の愛<BR>
+		<input type="checkbox">桃色吐息<BR>
+		<input type="checkbox">神医の施術<BR>
+		<input type="checkbox">神医の術式<BR>
+		<input type="checkbox">劉備の契り<BR>
+		<input type="checkbox">神卜の方術（未対応）<BR>
+		<input type="checkbox">神官の加護<BR>
+		<input type="checkbox">娘々敬慕<BR>
+		鹵獲武将に使う討伐回復スキル<BR>
+		<input type="checkbox">傾国<BR>
+		その他機能<BR>
+		<input type="checkbox">内政中も発射する<BR>
+		<input type="checkbox">鹵獲武将で指定していない武将も発射する<BR>
+		<input type="checkbox">パッシブと攻奪が混在する時に全武将を回復してから発射する<BR>
+
+		</td>
+		</tr>
+		</table>
+
+
+		<table border=“1” style="font-size: 9px;">
+		<tr>
+		<td valign="top">
+		休戦モード対応
+		<table border=“1” style="font-size: 9px">
+		<tr>
+		<td colspan="3"></td>
+		<td>ステータス</td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">防御解除時間</td>
+		<td><input type="text" style="text-align: center; width: 20px;">時</td>
+		<td><input type="text" style="text-align: center; width: 20px;">分から</td>
+		<td><input type="text" style="text-align: center; width: 50px;"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">鹵獲設定時間</td>
+		<td><input type="text" style="text-align: center; width: 20px;">時</td>
+		<td><input type="text" style="text-align: center; width: 20px;">分から</td>
+		<td><input type="text" style="text-align: center; width: 50px;"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">鹵獲解除時間</td>
+		<td><input type="text" style="text-align: center; width: 20px;">時</td>
+		<td><input type="text" style="text-align: center; width: 20px;">分から</td>
+		<td><input type="text" style="text-align: center; width: 50px;"></td>
+		</tr>
+		<tr>
+		<td><input type="checkbox">防御設定時間</td>
+		<td><input type="text" style="text-align: center; width: 20px;">時</td>
+		<td><input type="text" style="text-align: center; width: 20px;">分から</td>
+		<td><input type="text" style="text-align: center; width: 50px;"></td>
+		</tr>
+		</table>
+		防御武将設定時に使う回復スキル<BR>
+		<input type="checkbox">神医の術式<BR>
+		<input type="checkbox">劉備の契り<BR>
+		休戦モード時の出兵先<BR>
+		<input type="checkbox">★１　<input type="checkbox">★２　<input type="checkbox">個別<BR>
+		休戦モード明け時の出兵先<BR>
+		<input type="checkbox">★１　<input type="checkbox">★２　<input type="checkbox">個別<BR>
+
+		</td>
+		<td valign="top">
+		防御武将一覧
+		<table border=“1” style="font-size: 9px">
+
+		<tr>
+		<td>防御武将１</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将２</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将３</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将４</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将５</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将６</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将７</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将８</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+		<tr>
+		<td>防御武将９</td>
+		<td><input type="text" style="text-align: center; width: 65px;"></td>
+		<td><input type="checkbox">解除</td>
+		<td><input type="checkbox">設定</td>
+		</tr>
+
+		</table>
+		スキル発動は行いません
+		</td>
+		</tr>
 		</table>
 	</div>
 	<style>
@@ -252,7 +567,7 @@ var troop_html = (/*
 		}
 	-->
 	</style>
-*/);
+`);
 
 
 Setting_Box2.innerHTML+= troop_html;
