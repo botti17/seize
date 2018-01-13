@@ -154,7 +154,7 @@ function openSettingBox() {
 // ==========[ 設定 ]==========
 
 	 var Setting_Box2 = document.createElement("table");
-   Setting_Box2.style.color = COLOR_FRAME;
+   //Setting_Box2.style.color = COLOR_FRAME;
 
 	 Setting_Box2.innerHTML+='<table border="1">';
 	 Setting_Box2.innerHTML+='<tr>';
