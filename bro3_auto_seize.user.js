@@ -14,7 +14,7 @@
 // @grant GM_setValue
 // @grant GM_xmlhttpRequest
 // @grant GM_log
-// @version 0.07 Reb Edition
+// @version 0.074 Reb Edition
 // ==/UserScript==
 
 //2017.12.24 ツールの再作成に着手
@@ -154,7 +154,7 @@ function openSettingBox() {
 // ==========[ 設定 ]==========
 
 	 var Setting_Box2 = document.createElement("table");
-   //Setting_Box2.style.color = COLOR_FRAME;
+   Setting_Box2.style.backgroundColor = COLOR_BACK;
 
 	 Setting_Box2.innerHTML+='<table border="1">';
 	 Setting_Box2.innerHTML+='<tr>';
