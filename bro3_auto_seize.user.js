@@ -154,7 +154,7 @@ function openSettingBox() {
 // ==========[ 設定 ]==========
 
 	 var Setting_Box2 = document.createElement("table");
-   //Setting_Box2.style.color = COLOR_FRAME;
+   Setting_Box2.style.color = COLOR_FRAME;
 
 	 Setting_Box2.innerHTML+='<table border="1">';
 	 Setting_Box2.innerHTML+='<tr>';
@@ -184,7 +184,7 @@ function openSettingBox() {
 	 Setting_Box2.innerHTML+='</tr>';
 	 Setting_Box2.innerHTML+='</table>';
 
-	 Setting_Box2.insertAdjacentHTML('afterend', `
+/*	 Setting_Box2.insertAdjacentHTML('afterend', `
 <table border="1">
 <tr>
 <td class="vertical">資源取得方法</td>
@@ -199,7 +199,7 @@ function openSettingBox() {
 </tr>
 </table>
 `);
-
+*/
 
 	 ADContainer.appendChild(Setting_Box2);
 // ==========[ ボタンエリア ]==========
